@@ -8,6 +8,10 @@ namespace CronExpParser
 {
     public class Parser
     {
+        private const int HoursInADay = 24;
+        private const int MinutesInAnHour = 60;
+        private const int MonthsInAYear = 12;
+
         public Parser() { }
         private static string ParseSlashStar(string input, int unitOfTime, int offset) 
         {
@@ -26,8 +30,7 @@ namespace CronExpParser
                     var timeResult = 0;
                     for (int i = 0; i < executeAmountOfTimes; i++)
                     {
-                        result.Append(timeResult);
-                        result.Append(' ');
+                        result.Append(timeResult).Append(' ');
                         timeResult += time;
                     }
                 }
@@ -36,8 +39,7 @@ namespace CronExpParser
             {
                     for (int i = offset; i < unitOfTime + offset; i++)
                     {
-                        result.Append(i);
-                        result.Append(' ');
+                        result.Append(i).Append(' ');
                     } 
             }
             else
@@ -45,15 +47,15 @@ namespace CronExpParser
                 return input; 
             }
          
-            return result.ToString(); 
+            return result.ToString().Trim(); 
         }
         public static string ParseMinutes(string input)
         {
-            return ParseSlashStar(input, 60, 1);
+            return ParseSlashStar(input, MinutesInAnHour, 1);
         }
         public static string ParseHours(string input) 
         {
-            return ParseSlashStar(input, 24, 0);
+            return ParseSlashStar(input, HoursInADay, 0);
         }
         public static string ParseDayOfMonth(string input) 
          {
@@ -61,7 +63,7 @@ namespace CronExpParser
         }
         public static string ParseMonth(string input)
         {
-            return ParseSlashStar(input, 12, 1);
+            return ParseSlashStar(input, MonthsInAYear, 1);
         }
         public static string ParseDayOfWeek(string input)
         {
@@ -73,11 +75,10 @@ namespace CronExpParser
             {
                 for(int i = start; i <= n; i++)
                 { 
-                        result.Append(i);
-                        result.Append(' ');
+                        result.Append(i).Append(' ');
                 }
             }
-            return result.ToString();
+            return result.ToString().Trim();
         }
     }
    
