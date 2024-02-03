@@ -1,15 +1,14 @@
 ﻿using CronExpParser;
-using System;
 using System.Text;
 
-class Program
+public class Program
 {
-    static void Main()
+    public static void Main(string[] args)
     {
         var result = new List<string>(); 
         var cmd = "*/15 0 1,15 * 1-5 /usr/bin/find"; //Console.ReadLine
         //var cmd = "*/15 * 1,15 * 1-5 /usr/bin/find";
-        var cmds = cmd.Split();
+        var cmds = args[0].Split();
 
         result.Add(Parser.ParseMinutes(cmds[0]));
         result.Add(Parser.ParseHours(cmds[1]));

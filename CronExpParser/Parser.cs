@@ -75,7 +75,7 @@ namespace CronExpParser
             {
                 for(int i = start; i <= n; i++)
                 { 
-                        result.Append(i).Append(' ');
+                    result.Append(i).Append(' ');
                 }
             }
             return result.ToString().Trim();

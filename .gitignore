@@ -5,3 +5,4 @@
 /CronExpParser/obj
 /CronExpParser/bin/Debug/net6.0
 /.vs/CronExpParser
+/CronExpParserTests
