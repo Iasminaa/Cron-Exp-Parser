@@ -25,7 +25,6 @@ namespace CronExpParser
                  throw new ArgumentException(ExceptionMessages.NoArgsProvided);
              }
 
-           // var cmd = "*/15 0 1,15 * 1-5 /usr/bin/find";
             var result = new List<string>();
             var cmds = args[0].Split();
 
