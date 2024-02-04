@@ -15,17 +15,26 @@ namespace CronExpParser
         public static bool IsStar(string input) => input.Equals("*");
         private static bool IsSlashStar(string input) => input.StartsWith("*/");
         private static bool IsCommaSeparated(string input) => input.Contains(",");
-        private static bool IsLineSeparated(string input) => input.Contains("-");
+        private static bool IsRange(string input) => input.Contains("-");
 
-        private static string ParseLineSeparated(string input)
+        private static string ParseRange(string input)
         {
             var str = input.Split("-");
             bool success = Int32.TryParse(str[0], out var start);
-            bool success2 = Int32.TryParse(str[1], out var n);
+            var step = 1; 
+
             var result = new StringBuilder();
-            if (success && success2)
+            if (success)
             {
-                for (int i = start; i <= n; i++)
+                var stepDef = str[1].Split("/");
+                _ = Int32.TryParse(stepDef[0], out var n);
+
+                if (stepDef.Length > 1)
+                {
+                   _ = Int32.TryParse(stepDef[1], out step);
+                }
+
+                for (int i = start; i <= n; i=i+step)
                 {
                     result.Append(i).Append(' ');
                 }
@@ -44,7 +53,7 @@ namespace CronExpParser
             
             return result.ToString().Trim(); 
         }
-        private static string ParseSlashStar(string input, int unitOfTime) 
+        private static string ParseSlashStar(string input, int unitOfTime, int offset) 
         {
             var result = new StringBuilder();
 
@@ -53,7 +62,7 @@ namespace CronExpParser
             if (success)
             {
                 var executeAmountOfTimes = unitOfTime / time;
-                var timeResult = 0;
+                var timeResult = offset;
                 for (int i = 0; i < executeAmountOfTimes; i++)
                 {
                     result.Append(timeResult).Append(' ');
@@ -72,22 +81,22 @@ namespace CronExpParser
             }
             else if (IsSlashStar(input))
             {
-                return ParseSlashStar(input, unitOfTime);
+                return ParseSlashStar(input, unitOfTime, offset);
             }
             else if (IsCommaSeparated(input))
             {
                 return ParseCommaSeparated(input); 
             }
-            else if (IsLineSeparated(input))
+            else if (IsRange(input))
             {
-                return ParseLineSeparated(input);
+                return ParseRange(input);
             }
             return input; 
         }
 
         public static string ParseMinutes(string input)
         {
-            return ParseTime(input, MinutesInAnHour, 1);
+            return ParseTime(input, MinutesInAnHour, 0);
         }
         public static string ParseHours(string input) 
         {
@@ -103,7 +112,7 @@ namespace CronExpParser
         }
         public static string ParseDayOfWeek(string input)
         {
-            return ParseTime(input, DaysInAWeek, 1);
+            return ParseTime(input, DaysInAWeek, 0);
         }
     }
    

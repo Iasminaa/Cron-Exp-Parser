@@ -8,23 +8,24 @@ namespace CronExpParser
         {
             /* ==== Output ==== */
             var header = new string[] { "minute", "hour", "day of month", "month", "day of week", "command" };
-            var format = "{0,-25} {1,-25}" + Environment.NewLine;
+            var format = "{0,-25} {1,0}" + Environment.NewLine;
             var stringBuilder = new StringBuilder();
             for (int i = 0; i < result.Count; i++)
             {
                 stringBuilder.AppendFormat(format, header[i], result[i]);
             }
 
-            Console.WriteLine(stringBuilder.ToString());
+            Console.WriteLine(stringBuilder.ToString().Trim());
         }
 
         public static void Main(string[] args)
         {
-            if (args.Length == 0)
-            {
-                throw new ArgumentException(ExceptionMessages.NoArgsProvided);
-            }
+             if (args.Length == 0)
+             {
+                 throw new ArgumentException(ExceptionMessages.NoArgsProvided);
+             }
 
+           // var cmd = "*/15 0 1,15 * 1-5 /usr/bin/find";
             var result = new List<string>();
             var cmds = args[0].Split();
 
