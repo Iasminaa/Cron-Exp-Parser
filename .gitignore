@@ -6,3 +6,5 @@
 /CronExpParser/bin/Debug/net6.0
 /.vs/CronExpParser
 /.vs/ProjectEvaluation
+/CronExpParserTests/bin/Debug/net6.0
+/CronExpParserTests/obj
